@@ -78,7 +78,9 @@ useEffect(() => {
      </div>
        <div className='flex flex-wrap justify-center  items-center'>
         {allTask.map((e)=>{
-          return <Card key={e._id} value={e}/>
+          return( 
+            <Card  key={e._id} value={e}/>
+          )
         })}
        </div>
     </div>
