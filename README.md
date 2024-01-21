@@ -1,6 +1,6 @@
 # Personal Task Management Project
 
-Welcome to the Personal Task Management project based on the MERN stack! This project helps you manage your tasks efficiently.
+Welcome to the Personal Task Management project based on the MERN stack And Tailwind! This project helps you manage your tasks efficiently.
 
 ## Project Structure
 
