@@ -76,7 +76,7 @@ let createTask= async (req, res) =>
  
      await newTask.save();
      
-    // Add the new task's _id to the tasks array in the user document
+   
     await User.findByIdAndUpdate(req.userData.userId, { $push: { tasks: newTask._id } });
  
      res.status(201).json({ message: 'Task created successfully' });
@@ -124,18 +124,17 @@ let createTask= async (req, res) =>
    try {
      const taskId = req.params.taskId;
  
-     // Check if the task exists
+ 
      const task = await Task.findById(taskId);
      if (!task) {
        return res.status(404).json({ error: 'Task not found' });
      }
  
-     // Check if the task belongs to the authenticated user
+
      if (task.user.toString() !== req.userData.userId) {
        return res.status(403).json({ error: 'Unauthorized: Task does not belong to the user' });
      }
- 
-     // Delete the task
+
      await Task.findByIdAndDelete(taskId);
  
      res.status(200).json({ message: 'Task deleted successfully' });

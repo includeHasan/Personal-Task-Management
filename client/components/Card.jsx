@@ -9,7 +9,7 @@ const CardComponent = (props) => {
 
   let deleteHandler=async(e)=>
   { e.preventDefault()
-    console.log(data._id)
+    
  try {
     let deletedData=await axios.delete(`http://localhost:5000/api/tasks/${data._id}`,{withCredentials:true})
     console.log(deletedData)
@@ -22,7 +22,8 @@ let changeStatus=async(e)=>{
   e.preventDefault()
   console.log(data._id)
   try {
-    let a=await axios.put(`http://localhost:5000/api/status/${data._id}`,{withCredentials:true})
+    const updatedStatus = !data.completed;
+    let a=await axios.put(`http://localhost:5000/api/status/${props.value._id}`,{ completed: updatedStatus },{withCredentials:true})
     console.log(a)
   } catch (error) {
     console.log(error)
