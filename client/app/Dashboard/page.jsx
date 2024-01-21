@@ -84,5 +84,3 @@ useEffect(() => {
     </div>
   )
 }
-
-export default page
