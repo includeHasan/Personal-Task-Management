@@ -6,7 +6,9 @@ const page = () => {
 const [title, settitle] = useState("")
 const [description, setdescription] = useState("")
 const [allTask, setallTask] = useState([])
-
+const [totalTasks, setTotalTasks] = useState(0);
+const [completedTasks, setCompletedTasks] = useState(0);
+const [remainingTasks, setRemainingTasks] = useState(0);
 
 const submitHandler = useCallback(async (e) => {
   e.preventDefault();
@@ -18,6 +20,9 @@ const submitHandler = useCallback(async (e) => {
 
     // Directly update state with the newly added task
     setallTask(prevTasks => [...prevTasks, submit.data]);
+    
+    settitle("");
+    setdescription("");
   } catch (error) {
     alert('error check console');
     console.log(error);
@@ -31,7 +36,13 @@ const fetchData =async () => {
   try {
     let response = await axios.get("http://localhost:5000/api/task", { withCredentials: true });
     setallTask(response.data);
-    console.log("data:", response);
+
+  const total=response.data.length;
+  const completedTask=response.data.filter(task=>task.completed).length
+  const pendingTask=total-completedTask
+  setCompletedTasks(completedTask)
+  setRemainingTasks(pendingTask)
+  setTotalTasks(total)
   } catch (error) {
     console.log(error);
   }
@@ -74,12 +85,15 @@ useEffect(() => {
          >Add</button>
         </div>
       </form>
-    
+    <div className='mt-5 flex'>
+  
+
+    </div>
      </div>
        <div className='flex flex-wrap justify-center  items-center'>
         {allTask.map((e)=>{
           return( 
-            <Card  key={e._id} value={e}/>
+            <Card   key={e._id} value={e}/>
           )
         })}
        </div>

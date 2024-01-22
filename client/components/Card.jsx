@@ -36,7 +36,7 @@ const statusText = data.completed ? 'Completed' : 'Pending';
     <div className="bg-white flex-row justify-center items-center shadow-md rounded-md m-2 text-black  p-6 max-w-sm mx-auto">
     <h2 className="text-xl font-semibold mb-2">{data.title}</h2>
     <p className="text-gray-600 mb-4">{data.description}</p>
-    <div className={`text-sm ${data.completed ? 'text-green-500' : 'text-red-500'}`}>
+    <div className={`text-sm ${data.completed ? 'text-green-500 hover:text-green-700' : 'text-red-500 hover:text-red-700'}`}>
     Status: <button onClick={changeStatus}> {statusText}</button>
    </div>
    <button
