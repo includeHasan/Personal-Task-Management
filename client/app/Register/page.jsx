@@ -1,21 +1,26 @@
 "use client"
 import React, { useState } from 'react';
 import axios from 'axios';
+
+import { useRouter } from 'next/navigation';
+
 const page = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-    
+  const router=useRouter()
   const handleSubmit =async (e) => {
     e.preventDefault()
    let data= {username,email,password}
    try {
-
+    
      let submit=await axios.post("http://localhost:5000/api/register",data)
-     console.log(submit.data.message)
-   let message=submit.data.message
-      
-         alert(message);
+     console.log(submit)
+     
+   let success=submit.data.success
+   if(success){
+   router.push('/Login');
+   }  
       
    } catch (error) {
     alert("sorry you are not registered please try again")
