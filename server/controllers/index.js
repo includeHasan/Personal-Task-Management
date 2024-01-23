@@ -87,6 +87,31 @@ let createTask= async (req, res) =>
  }
 
 
+ let deleteTask= async (req, res) =>
+  {
+   try {
+     const taskId = req.params.taskId;
+     const userId = req.userData.userId;
+ 
+     const task = await Task.findById(taskId);
+     if (!task) {
+       return res.status(404).json({ error: 'Task not found' });
+     }
+ 
+
+     if (task.user.toString() !== req.userData.userId) {
+       return res.status(403).json({ error: 'Unauthorized: Task does not belong to the user' });
+     }
+
+     await Task.findByIdAndDelete(taskId);
+     await User.findByIdAndUpdate(userId, { $pull: { tasks: taskId } });
+
+ 
+     res.status(200).json({ message: 'Task deleted successfully' });
+   } catch (error) {
+     res.status(500).json({ error: 'Internal Server Error' });
+   }
+ }
 
 
  let specificUserTask= async (req, res) => 
@@ -119,29 +144,7 @@ let createTask= async (req, res) =>
  }
 
  
- let deleteTask= async (req, res) =>
-  {
-   try {
-     const taskId = req.params.taskId;
- 
- 
-     const task = await Task.findById(taskId);
-     if (!task) {
-       return res.status(404).json({ error: 'Task not found' });
-     }
- 
 
-     if (task.user.toString() !== req.userData.userId) {
-       return res.status(403).json({ error: 'Unauthorized: Task does not belong to the user' });
-     }
-
-     await Task.findByIdAndDelete(taskId);
- 
-     res.status(200).json({ message: 'Task deleted successfully' });
-   } catch (error) {
-     res.status(500).json({ error: 'Internal Server Error' });
-   }
- }
 
  let editTask=async (req, res) => {
    try {
